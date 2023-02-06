@@ -10,15 +10,15 @@ export class ChecklistService {
   private checklists$ = new BehaviorSubject<Checklist[]>([]);
 
   constructor(
-    // private storageService: StorageService,
+    private storageService: StorageService,
     private checklistItemService: ChecklistItemService) {}
 
   load() {
-    // this.storageService.loadChecklists$
-    //   .pipe(take(1))
-    //   .subscribe((checklists) => {
-    //     this.checklists$.next(checklists);
-    //   });
+    this.storageService.loadChecklists$
+      .pipe(take(1))
+      .subscribe((checklists) => {
+        this.checklists$.next(checklists);
+      });
   }
 
   add(checklist: Pick<Checklist, 'title'>) {
@@ -56,7 +56,7 @@ export class ChecklistService {
    // This is what we will use to consume the checklist data throughout the app
    private sharedChecklists$: Observable<Checklist[]> = this.checklists$.pipe(
      // Trigger a save whenever this stream emits new data
-    //  tap((checklists) => this.storageService.saveChecklists(checklists)),
+     tap((checklists) => this.storageService.saveChecklists(checklists)),
      // Share this stream with multiple subscribers, instead of creating a new one for each
      shareReplay(1)
    );

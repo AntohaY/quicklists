@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
-// import { StorageService } from 'src/app/shared/data-access/storage.service';
+import { StorageService } from 'src/app/shared/data-access/storage.service';
 import {
   AddChecklistItem,
   ChecklistItem,
@@ -13,23 +13,23 @@ export class ChecklistItemService {
   private checklistItems$ = new BehaviorSubject<ChecklistItem[]>([]);
 
   constructor(
-    // private storageService: StorageService
+    private storageService: StorageService
     ) {}
 
   load() {
-    // this.storageService.loadChecklistItems$
-    //   .pipe(take(1))
-    //   .subscribe((checklistItems) => {
-    //     this.checklistItems$.next(checklistItems);
-    //   });
+    this.storageService.loadChecklistItems$
+      .pipe(take(1))
+      .subscribe((checklistItems) => {
+        this.checklistItems$.next(checklistItems);
+      });
   }
 
   getItemsByChecklistId(checklistId: string) {
     return this.checklistItems$.pipe(
       map((items) => items.filter((item) => item.checklistId === checklistId)),
-      // tap(() =>
-      //   this.storageService.saveChecklistItems(this.checklistItems$.value)
-      // )
+      tap(() =>
+        this.storageService.saveChecklistItems(this.checklistItems$.value)
+      )
     );
   }
 

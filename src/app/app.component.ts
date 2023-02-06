@@ -9,9 +9,9 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { ChecklistItemService } from './checklist/data-access/checklistItemService';
 import { ChecklistService } from './shared/data-access/checklist.service';
 
-// import { Drivers } from '@ionic/storage';
-// import { IonicStorageModule } from '@ionic/storage-angular';
-// import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
+import { Drivers } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage-angular';
+import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 @Component({
   selector: 'app-root',
   template: `
@@ -37,14 +37,14 @@ export class AppComponent implements OnInit {
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    // IonicStorageModule.forRoot({
-    //   driverOrder: [
-    //     // eslint-disable-next-line no-underscore-dangle
-    //     CordovaSQLiteDriver._driver,
-    //     Drivers.IndexedDB,
-    //     Drivers.LocalStorage,
-    //   ],
-    // }),
+    IonicStorageModule.forRoot({
+      driverOrder: [
+        // eslint-disable-next-line no-underscore-dangle
+        CordovaSQLiteDriver._driver,
+        // Drivers.IndexedDB,
+        // Drivers.LocalStorage,
+      ],
+    }),
     RouterModule.forRoot(
       [
         {
